@@ -16,6 +16,7 @@ private:
     rclcpp::TimerBase::SharedPtr timer_;
     std::default_random_engine generator_;
     std::uniform_real_distribution<float> distribution_;
+    int frequency_;
 };
 
 #endif // LIDAR_PUBLISHER_HPP_

@@ -3,9 +3,11 @@
 ImuPublisher::ImuPublisher()
 : Node("imu_publisher"), distribution_(0.0, 1.0)
 {
+    this->declare_parameter<int>("frequency", 10);
+    this->get_parameter("frequency", frequency_);
     imu_publisher_ = this->create_publisher<sensor_msgs::msg::Imu>("imu/data", 10);
     timer_ = this->create_wall_timer(
-        std::chrono::milliseconds(10),  // 100 Hz
+        std::chrono::milliseconds(1000 / frequency_),
         std::bind(&ImuPublisher::publish_imu_data, this)
     );
 }

@@ -3,9 +3,11 @@
 CameraPublisher::CameraPublisher()
 : Node("camera_publisher"), distribution_(0, 255)
 {
+    this->declare_parameter<int>("frequency", 10);
+    this->get_parameter("frequency", frequency_);
     camera_publisher_ = this->create_publisher<sensor_msgs::msg::Image>("camera/image", 10);
     timer_ = this->create_wall_timer(
-        std::chrono::milliseconds(100),  // 10 Hz
+        std::chrono::milliseconds(1000 / frequency_),
         std::bind(&CameraPublisher::publish_camera_data, this)
     );
 }

@@ -16,6 +16,7 @@ private:
     rclcpp::TimerBase::SharedPtr timer_;
     std::default_random_engine generator_;
     std::normal_distribution<double> distribution_;
+    int frequency_;
 };
 
 #endif // IMU_PUBLISHER_HPP_

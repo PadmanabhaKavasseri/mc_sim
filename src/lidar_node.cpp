@@ -3,9 +3,11 @@
 LidarPublisher::LidarPublisher()
 : Node("lidar_publisher"), distribution_(0.0, 10.0)
 {
+    this->declare_parameter<int>("frequency", 10);
+    this->get_parameter("frequency", frequency_);
     lidar_publisher_ = this->create_publisher<sensor_msgs::msg::LaserScan>("scan", 10);
     timer_ = this->create_wall_timer(
-        std::chrono::milliseconds(100),  // 10 Hz
+        std::chrono::milliseconds(1000 / frequency_),
         std::bind(&LidarPublisher::publish_lidar_data, this)
     );
 }

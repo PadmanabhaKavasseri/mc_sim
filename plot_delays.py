@@ -8,7 +8,7 @@ imu_delays = []
 camera_delays = []
 
 # Read the CSV file
-with open('../delays.csv', 'r') as file:
+with open('../../delays.csv', 'r') as file:
     reader = csv.reader(file)
     next(reader)  # Skip the header row
     for row in reader:
