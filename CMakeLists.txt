@@ -23,24 +23,26 @@ add_executable(imu_node src/imu_node.cpp)
 ament_target_dependencies(imu_node rclcpp sensor_msgs)
 
 # Camera Node
-# add_executable(camera_node src/camera_node.cpp)
-# ament_target_dependencies(camera_node rclcpp sensor_msgs)
+add_executable(camera_node src/camera_node.cpp)
+ament_target_dependencies(camera_node rclcpp sensor_msgs)
+
+# Navigation Node
+add_executable(navigation_node src/nav_node.cpp)
+ament_target_dependencies(navigation_node rclcpp sensor_msgs nav_msgs)
 
 # Motor Controller Node
 # add_executable(motor_controller_node src/motor_controller_node.cpp)
 # ament_target_dependencies(motor_controller_node rclcpp std_msgs)
 
-# Navigation Node
-# add_executable(navigation_node src/navigation_node.cpp)
-# ament_target_dependencies(navigation_node rclcpp sensor_msgs nav_msgs)
+
 
 # Install targets
 install(TARGETS
   lidar_node
   imu_node
-  # camera_node
+  camera_node
+  navigation_node
   # motor_controller_node
-  # navigation_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
@@ -50,3 +52,9 @@ install(DIRECTORY launch
 )
 
 ament_package()
+
+
+
+
+# colcon build --packages-select mc_sim
+# ros2 launch mc_sim launch.py
