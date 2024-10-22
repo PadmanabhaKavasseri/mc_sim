@@ -1,5 +1,5 @@
 #include "nav_node.hpp"
-
+#include "priority_executor.hpp"
 
 NavigationNode::NavigationNode()
 : Node("navigation_node")
@@ -89,8 +89,10 @@ void NavigationNode::camera_callback(const sensor_msgs::msg::Image::SharedPtr ms
 int main(int argc, char * argv[])
 {
     rclcpp::init(argc, argv);
-    auto executor = std::make_shared<rclcpp::executors::SingleThreadedExecutor>();
     auto node = std::make_shared<NavigationNode>();
+
+    // auto executor = std::make_shared<rclcpp::executors::SingleThreadedExecutor>();
+    auto executor = std::make_shared<PriorityExecutor>();
     executor->add_node(node);
     executor->spin();
     rclcpp::shutdown();

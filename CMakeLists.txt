@@ -23,11 +23,11 @@ add_executable(imu_node src/imu_node.cpp)
 ament_target_dependencies(imu_node rclcpp sensor_msgs)
 
 # Camera Node
-add_executable(camera_node src/camera_node.cpp)
+add_executable(camera_node src/camera_node.cpp )
 ament_target_dependencies(camera_node rclcpp sensor_msgs)
 
 # Navigation Node
-add_executable(navigation_node src/nav_node.cpp)
+add_executable(navigation_node src/nav_node.cpp src/priority_executor.cpp)
 ament_target_dependencies(navigation_node rclcpp sensor_msgs nav_msgs)
 
 # Multi-threaded Navigation Node
