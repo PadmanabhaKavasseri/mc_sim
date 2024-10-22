@@ -30,6 +30,10 @@ ament_target_dependencies(camera_node rclcpp sensor_msgs)
 add_executable(navigation_node src/nav_node.cpp)
 ament_target_dependencies(navigation_node rclcpp sensor_msgs nav_msgs)
 
+# Multi-threaded Navigation Node
+add_executable(multi_nav_node src/multi_nav_node.cpp)
+ament_target_dependencies(multi_nav_node rclcpp sensor_msgs std_msgs)
+
 # Motor Controller Node
 # add_executable(motor_controller_node src/motor_controller_node.cpp)
 # ament_target_dependencies(motor_controller_node rclcpp std_msgs)
@@ -42,6 +46,7 @@ install(TARGETS
   imu_node
   camera_node
   navigation_node
+  multi_nav_node
   # motor_controller_node
   DESTINATION lib/${PROJECT_NAME}
 )

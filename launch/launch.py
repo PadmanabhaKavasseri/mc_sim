@@ -8,14 +8,14 @@ def generate_launch_description():
             executable='lidar_node',
             name='lidar_node',
             output='screen',
-            parameters=[{'frequency': 80}] 
+            parameters=[{'frequency': 100}] 
         ),
         Node(
             package='mc_sim',
             executable='imu_node',
             name='imu_node',
             output='screen',
-            parameters=[{'frequency': 20}] 
+            parameters=[{'frequency': 40}] 
         ),
         Node(
             package='mc_sim',
@@ -24,13 +24,24 @@ def generate_launch_description():
             output='screen',
             parameters=[{'frequency': 20}]
         ),
+        # Node(
+        #     package='mc_sim',
+        #     executable='navigation_node',
+        #     name='navigation_node',
+        #     output='screen',
+        #     parameters=[
+        #         {'lidar_processing_time_ms': 100},
+        #         {'imu_processing_time_ms': 200},
+        #         {'camera_processing_time_ms': 400}
+        #     ]
+        # ),
         Node(
             package='mc_sim',
-            executable='navigation_node',
-            name='navigation_node',
+            executable='multi_nav_node',
+            name='multi_nav_node',
             output='screen',
             parameters=[
-                {'lidar_processing_time_ms': 800},
+                {'lidar_processing_time_ms': 100},
                 {'imu_processing_time_ms': 100},
                 {'camera_processing_time_ms': 100}
             ]
