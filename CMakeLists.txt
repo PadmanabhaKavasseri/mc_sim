@@ -14,6 +14,10 @@ find_package(nav_msgs REQUIRED)
 
 include_directories(./include/mc_sim)
 
+# Custom Executor
+add_library(custom_executor src/custom_executor.cpp)
+ament_target_dependencies(custom_executor rclcpp)
+
 # LiDAR Node
 add_executable(lidar_node src/lidar_node.cpp)
 ament_target_dependencies(lidar_node rclcpp sensor_msgs)
@@ -27,8 +31,9 @@ add_executable(camera_node src/camera_node.cpp )
 ament_target_dependencies(camera_node rclcpp sensor_msgs)
 
 # Navigation Node
-add_executable(navigation_node src/nav_node.cpp src/priority_executor.cpp)
+add_executable(navigation_node src/nav_node.cpp )
 ament_target_dependencies(navigation_node rclcpp sensor_msgs nav_msgs)
+target_link_libraries(navigation_node custom_executor)  # Link custom executor
 
 # Multi-threaded Navigation Node
 add_executable(multi_nav_node src/multi_nav_node.cpp)
@@ -47,6 +52,7 @@ install(TARGETS
   camera_node
   navigation_node
   multi_nav_node
+  custom_executor
   # motor_controller_node
   DESTINATION lib/${PROJECT_NAME}
 )

@@ -1,5 +1,5 @@
 #include "nav_node.hpp"
-#include "priority_executor.hpp"
+// #include "priority_executor.hpp"
 
 NavigationNode::NavigationNode()
 : Node("navigation_node")
@@ -13,7 +13,7 @@ NavigationNode::NavigationNode()
     this->get_parameter("camera_processing_time_ms", camera_processing_time_ms_);
 
     lidar_subscription_ = this->create_subscription<sensor_msgs::msg::LaserScan>(
-        "scan", 10, std::bind(&NavigationNode::lidar_callback, this, std::placeholders::_1));
+        "scan", 10, std::bind(&NavigationNode::lidar_callback, this, std::placeholders::_1)); //what is the 10 buffer or queueu who creates this queue
     imu_subscription_ = this->create_subscription<sensor_msgs::msg::Imu>(
         "imu/data", 10, std::bind(&NavigationNode::imu_callback, this, std::placeholders::_1));
     camera_subscription_ = this->create_subscription<sensor_msgs::msg::Image>(
@@ -92,7 +92,8 @@ int main(int argc, char * argv[])
     auto node = std::make_shared<NavigationNode>();
 
     // auto executor = std::make_shared<rclcpp::executors::SingleThreadedExecutor>();
-    auto executor = std::make_shared<PriorityExecutor>();
+    // auto executor = std::make_shared<CustomExecutor>();
+    auto executor = std::make_shared<CustomExecutor>();
     executor->add_node(node);
     executor->spin();
     rclcpp::shutdown();

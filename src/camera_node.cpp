@@ -5,7 +5,7 @@ CameraPublisher::CameraPublisher()
 {
     this->declare_parameter<int>("frequency", 10);
     this->get_parameter("frequency", frequency_);
-    camera_publisher_ = this->create_publisher<sensor_msgs::msg::Image>("camera/image", 10);
+    camera_publisher_ = this->create_publisher<sensor_msgs::msg::Image>("camera/image", 10);//does the qos matter to executor
     timer_ = this->create_wall_timer(
         std::chrono::milliseconds(1000 / frequency_),
         std::bind(&CameraPublisher::publish_camera_data, this)

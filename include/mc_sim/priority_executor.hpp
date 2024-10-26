@@ -1,23 +1,26 @@
-#ifndef PRIORITY_EXECUTOR_HPP
-#define PRIORITY_EXECUTOR_HPP
+#ifndef EXECUTOR_HPP
+#define EXECUTOR_HPP
 
-#include "rclcpp/rclcpp.hpp"
-#include <queue>
-#include <functional>
+#include <rclcpp/rclcpp.hpp>
+#include <sensor_msgs/msg/image.hpp>
+#include <sensor_msgs/msg/laser_scan.hpp>
 
-class PriorityExecutor : public rclcpp::Executor
+class CustomExecutor : public rclcpp::Executor
 {
 public:
-    PriorityExecutor();
-
-    void spin_once_impl(std::chrono::nanoseconds timeout) override;
+    CustomExecutor();
+    void add_node(const rclcpp::Node::SharedPtr &node);
     void spin() override;
 
 private:
-    std::queue<rclcpp::AnyExecutable> camera_queue_;
-    std::queue<rclcpp::AnyExecutable> other_queue_;
+    void process_camera_images();
+    void process_other_topics();
 
-    bool get_next_executable(rclcpp::AnyExecutable & any_exec, std::chrono::nanoseconds timeout);
+    rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr camera_image_sub_;
+    rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr scan_sub_;
+
+    sensor_msgs::msg::Image::SharedPtr last_camera_image_;
+    sensor_msgs::msg::LaserScan::SharedPtr last_scan_;
 };
 
-#endif // PRIORITY_EXECUTOR_HPP
+#endif // EXECUTOR_HPP
